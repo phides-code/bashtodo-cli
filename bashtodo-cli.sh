@@ -13,11 +13,11 @@ quit_script() {
 }
  
 show_menu() {
-    echo -n "Show (P)ending, Show (C)ompleted, Show (A)ll, Create (N)ew, (E)dit, (D)elete, (Q)uit. Selection: "
+    echo -n "(P)ending, (C)ompleted, (A)ll, (N)ew, (E)dit, (D)elete, (Q)uit. Selection: "
     read -r selection
     case "${selection^^}" in
-        P) list_items "PENDING" ;;
-        C) list_items "COMPLETED" ;;
+        P) list_items "pending" ;;
+        C) list_items "completed" ;;
         A) list_items ;;
         N) create_item ;;
         E) edit_item ;;
