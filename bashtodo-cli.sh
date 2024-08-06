@@ -25,7 +25,7 @@ show_menu() {
         E) edit_item ;;
         D) delete_item ;;
         Q) quit_script ;;
-        *) echo "Invalid selection. Please try again." ;;
+        *) echo ;;
     esac
 }
 

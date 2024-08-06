@@ -10,7 +10,7 @@ if [ -z "$api_url" ]; then
 fi
 
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
+BLUE='\033[1;34m'
 NC='\033[0m' # No Color
 
 list_items() {
@@ -35,9 +35,9 @@ list_items() {
 
 parse_and_display() {
     # Parse and display the tasks ordered by createdOn with color coding based on taskStatus
-    json_output=$1
+    data=$1
 
-    echo "$json_output" | jq -r '
+    echo "$data" | jq -r '
         . 
         | sort_by(.createdOn)
         | to_entries[]
@@ -45,7 +45,7 @@ parse_and_display() {
         | @tsv
     ' | while IFS=$'\t' read -r index content status; do
         if [[ "$status" == "PENDING" ]]; then
-            echo -e "${YELLOW}${index}) ${content}${NC}"
+            echo -e "${BLUE}${index}) ${content}${NC}"
         elif [[ "$status" == "COMPLETED" ]]; then
             echo -e "${GREEN}${index}) ${content}${NC}"
         else
