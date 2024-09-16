@@ -7,6 +7,17 @@ source "$SCRIPT_DIR/create.sh"
 source "$SCRIPT_DIR/mark-complete.sh"
 source "$SCRIPT_DIR/edit.sh"
 source "$SCRIPT_DIR/delete.sh"
+source "$SCRIPT_DIR/.private"
+
+if [ -z "$api_url" ]; then
+    echo "Error: api_url is not set in the .private file."
+    exit 1
+fi
+
+if [ -z "$api_key" ]; then
+    echo "Error: api_key is not set in the .private file."
+    exit 1
+fi
 
 quit_script() {
     echo "Quitting..."

@@ -4,20 +4,20 @@ SCRIPT_DIR="$(dirname "$0")"
 
 source "$SCRIPT_DIR/.private"
 
-if [ -z "$api_url" ]; then
-    echo "Error: api_url is not set in the .private file."
-    exit 1
-fi
-
 GREEN='\033[0;32m'
 BLUE='\033[1;34m'
 NC='\033[0m' # No Color
 
 list_items() {
     # Concatenate any argument 
+    # we can invoke :
+    # list_items "pending" 
+    # list_items "completed" 
+    # list_items (no arg means all)
     task_status="/$1"
 
-    api_response=$(curl -s "$api_url""$task_status")
+    # shellcheck disable=SC2154
+    api_response=$(curl -s -H "x-api-key: ""$api_key""" "$api_url""$task_status")
 
     error_message=$(echo "$api_response" | jq -r '.errorMessage')
     data=$(echo "$api_response" | jq -r '.data')
@@ -25,7 +25,7 @@ list_items() {
     if [ "$error_message" == "null" ] && [ "$data" != "null" ]; then
         parse_and_display "$data"
     else
-        if [ "$error_message" != "null" ]; then
+        if [ "$error_message" != "null" ] && [ "$error_message" != "" ]; then
             echo "Error: $error_message"
         else
             echo "Error reaching API."
